@@ -2518,13 +2518,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.156177, y: -0.6896439, z: 0.156177, w: 0.6896439}
+  m_LocalRotation: {x: 0.11640196, y: -0.6974601, z: 0.11640196, w: 0.6974601}
   m_LocalPosition: {x: 22.3, y: 4.9, z: 22.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 25.52, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 18.95, y: -90, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2534,11 +2534,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a8258bdefdc6d64a8a6ea39a67b0e80, type: 3}
+  m_Script: {fileID: 11500000, guid: 25f0c9403ded9f64cbf803678b613efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {x: 0, y: 1.5, z: -6}
-  target: {fileID: 1801646777}
+  _camerPposition: {x: 0.2, y: 5, z: -7}
 --- !u!1 &971073178
 GameObject:
   m_ObjectHideFlags: 0
@@ -3897,9 +3896,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e15d86d4d8c91a4189fe310b3082f66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  rotateSpeed: 50
-  jumpVelocity: 5
+  _speed: 7
+  _rotateSpeed: 50
+  _jumpVelocity: 5
   distanceToGround: 0.1
   groundLayer:
     serializedVersion: 2

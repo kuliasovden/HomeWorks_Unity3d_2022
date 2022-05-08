@@ -9,12 +9,12 @@ public class Enemy : MonoBehaviour
     public List<Transform> locations;
     public Transform player;
 
-    private int locationIndex = 0;
-    private NavMeshAgent agent;
+    private int _locationIndex = 0;
+    private NavMeshAgent _agent;
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player").transform;
         InitializePatrolRoute();
         MoveNext();
@@ -22,12 +22,12 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if(agent.remainingDistance <0.2f && !agent.pathPending)
+        if(_agent.remainingDistance <0.2f && !_agent.pathPending)
         {
             MoveNext();
         }
     }
-    void InitializePatrolRoute()
+   private void InitializePatrolRoute()
     {
         foreach(Transform child in patrolRoute)
         {
@@ -35,18 +35,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void MoveNext()
+   private void MoveNext()
     {
         if (locations.Count == 0) return;
-        agent.destination = locations[locationIndex].position;
-        locationIndex = (locationIndex + 1) % locations.Count;
+        _agent.destination = locations[_locationIndex].position;
+        _locationIndex = (_locationIndex + 1) % locations.Count;
     } 
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.name == "Player")
         {
-            agent.destination = player.position;
+            _agent.destination = player.position;
             Debug.Log("Enemy detected!");
         }
     }

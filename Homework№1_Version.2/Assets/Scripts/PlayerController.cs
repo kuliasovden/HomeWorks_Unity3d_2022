@@ -4,54 +4,65 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    [SerializeField] private float rotateSpeed;
-    [SerializeField] private float jumpVelocity;
-    [SerializeField] private float distanceToGround;
-    private Rigidbody rb;
-    private CapsuleCollider col;
+    [SerializeField] private float _speed;
+    [SerializeField] private float _rotateSpeed;
+    [SerializeField] private float _jumpVelocity;
 
+    public float distanceToGround = 0.1f;
     public LayerMask groundLayer;
-    // Start is called before the first frame update
-    void Start()
+
+    private float _hInput;
+    private float _vInput;
+    private bool _jumpFlag = false;
+    private Rigidbody _rb;
+    private CapsuleCollider _col;
+
+    private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        col = GetComponent<CapsuleCollider>();
+        _rb = GetComponent<Rigidbody>();
+        _col = GetComponent<CapsuleCollider>();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Update()
+    {
+        _vInput = Input.GetAxis("Vertical") * _speed;
+        _hInput = Input.GetAxis("Horizontal") * _rotateSpeed;
+
+        if (Input.GetKeyDown(KeyCode.Space)&&IsGrounded())
+        {
+            _jumpFlag = true;
+        }
+    }
+
+    private void FixedUpdate()
     {
         Movement();
         Jump();
     }
 
-    void Movement()
+   private void Movement()
     {
-        float horizontalMovement = Input.GetAxis("Horizontal");
-        float verticalMovement = Input.GetAxis("Vertical");
-
-        Vector3 rotation = Vector3.up * horizontalMovement * rotateSpeed;
+        Vector3 rotation = Vector3.up * _hInput;
         Quaternion angelRotation = Quaternion.Euler(rotation * Time.fixedDeltaTime);
 
-        rb.MovePosition(transform.position + transform.forward * verticalMovement * speed * Time.fixedDeltaTime);
-        rb.MoveRotation(rb.rotation * angelRotation);
-
+        _rb.MovePosition(transform.position + transform.forward * _vInput * Time.fixedDeltaTime);
+        _rb.MoveRotation(_rb.rotation * angelRotation);
     }
 
-    void Jump()
+   private void Jump()
     {
-        if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
+        if (_jumpFlag && IsGrounded())
         {
-            rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+            _rb.AddForce(Vector3.up * _jumpVelocity, ForceMode.Impulse);
+            _jumpFlag = false;
         }
     }
 
    private bool IsGrounded()
     {
-        Vector3 capsuleBottom = new Vector3(col.bounds.center.x, col.bounds.min.y, col.bounds.center.z);
+        Vector3 capsuleBottom = new Vector3(_col.bounds.center.x, _col.bounds.min.y, _col.bounds.center.z);
 
-        bool grounded = Physics.CheckCapsule(col.bounds.center, capsuleBottom, distanceToGround, groundLayer, QueryTriggerInteraction.Ignore);
+        bool grounded = Physics.CheckCapsule(_col.bounds.center, capsuleBottom, distanceToGround, groundLayer, QueryTriggerInteraction.Ignore);
 
         return grounded;
     }
