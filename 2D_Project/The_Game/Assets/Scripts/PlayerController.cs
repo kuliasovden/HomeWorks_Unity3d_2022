@@ -4,89 +4,98 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed;
-    public float jumpForce;
-    public Transform firePoint;
-    public GameObject bulletPrefab;
+    [SerializeField]private float _moveSpeed;
+    [SerializeField]private float _jumpForce;
+    [SerializeField]private Transform _firePoint;
+    [SerializeField]private GameObject _bulletPrefab;
+    [SerializeField] private LayerMask _groundLayer;
 
-
-    private Rigidbody2D rb;
-    private BoxCollider2D boxColl;
-    private SpriteRenderer sr;
-    private Animator anim;
-    private bool grounded;
-    private bool facingRight = true;
-    [SerializeField] private LayerMask groundLayer;
+    private Rigidbody2D _rb;
+    private BoxCollider2D _boxColl;
+    private SpriteRenderer _sr;
+    private Animator _anim;
+    private bool _grounded;
+    private bool _facingRight = true;
+    private float _vInput;
+    private bool _jumpInput = false;
 
     
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        boxColl = GetComponent<BoxCollider2D>();
-        sr = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
+        _rb = GetComponent<Rigidbody2D>();
+        _boxColl = GetComponent<BoxCollider2D>();
+        _sr = GetComponent<SpriteRenderer>();
+        _anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        _vInput = Input.GetAxis("Horizontal") * _moveSpeed;
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            _jumpInput = true;
+        }
+
         Shoot();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Movement();
 
     }
 
     public void Movement()
-    {
-        float movement = Input.GetAxis("Horizontal");      
-        rb.velocity = new Vector2(movement * moveSpeed, rb.velocity.y);
+    {     
+        _rb.velocity = new Vector2(_vInput, _rb.velocity.y);
         
-        if (Input.GetKey(KeyCode.Space) && isGrounded())
+        if (_jumpInput && isGrounded())
         {
-            Jump();          
+            Jump();
+            _jumpInput = false;
         }
 
-        if (movement > 0 && !facingRight)
+        if (_vInput > 0 && !_facingRight)
         {
             Flip();
         }
-        else if(movement < 0 && facingRight)
+        else if(_vInput < 0 && _facingRight)
         {
             Flip();
         }
 
-        anim.SetBool("Run", movement != 0);
-        anim.SetBool("Grounded", isGrounded());
+        _anim.SetBool("Run", _vInput != 0);
+        _anim.SetBool("Grounded", isGrounded());
 
     }
 
     // Поворот обьекта
-    void Flip()
+   private void Flip()
     {
-        facingRight = !facingRight;
+        _facingRight = !_facingRight;
 
         transform.Rotate(0f, 180f, 0f);
     }
 
-    void Jump()
+    private void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        anim.SetTrigger("Jump");
-        //grounded = false;
+        _rb.AddForce(Vector2.up*_jumpForce, ForceMode2D.Impulse);
+        _anim.SetTrigger("Jump");        
+        _jumpInput = false;
+        _grounded = true;
     }
 
     //Стрельба
-    void Shoot()
+    private void Shoot()
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
 
-                anim.SetTrigger("Attac");
+                _anim.SetTrigger("Attac");
              
         }              
     }
@@ -96,13 +105,13 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.tag == "Ground")
         {
-            //grounded = true;
+            _grounded = true;
         }
     }
 
     private bool isGrounded()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxColl.bounds.center, boxColl.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(_boxColl.bounds.center, _boxColl.bounds.size, 0, Vector2.down, 0.1f, _groundLayer);
         return raycastHit.collider !=null;
     }
 

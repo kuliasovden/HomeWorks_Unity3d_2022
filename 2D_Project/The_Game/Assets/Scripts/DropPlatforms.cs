@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class DropPlatforms : MonoBehaviour
 {
-    Rigidbody2D rb;
+   private Rigidbody2D _rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
         
     }
 
@@ -24,6 +24,6 @@ public class DropPlatforms : MonoBehaviour
 
     void DropPlatform()
     {
-        rb.isKinematic = false;
+        _rb.isKinematic = false;
     }
 }

@@ -1880,13 +1880,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5f706cce0e530479d95dc153e087c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 854813738}
-  timeOffset: 5
-  posOfset: {x: 5.95, y: 1.5}
-  leftLimit: 200
-  rightLimit: 2.83
-  bottomLimit: 0
-  topLimit: 2
+  _player: {fileID: 854813738}
+  _timeOffset: 5
+  _posOfset: {x: 5.95, y: 1.5}
+  _leftLimit: 200
+  _rightLimit: 2.83
+  _bottomLimit: 0
+  _topLimit: 2
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -18562,8 +18562,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
+  m_UseAutoMass: 1
+  m_Mass: 0.4565818
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -18675,12 +18675,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b3130f3b2d0f784db2e3a75043cfdc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  jumpForce: 6.2
-  firePoint: {fileID: 1562889796}
-  bulletPrefab: {fileID: 3984380551543402919, guid: 7dd37471ac2a8e94c877c6048807f42d,
+  _moveSpeed: 5
+  _jumpForce: 3
+  _firePoint: {fileID: 1562889796}
+  _bulletPrefab: {fileID: 3984380551543402919, guid: 7dd37471ac2a8e94c877c6048807f42d,
     type: 3}
-  groundLayer:
+  _groundLayer:
     serializedVersion: 2
     m_Bits: 256
 --- !u!95 &854813744

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField]private GameObject player;
-    [SerializeField]float timeOffset;
-    [SerializeField] Vector2 posOfset;
-    [SerializeField] float leftLimit;
-    [SerializeField] float rightLimit;
-    [SerializeField] float bottomLimit;
-    [SerializeField] float topLimit;
+    [SerializeField]private GameObject _player;
+    [SerializeField]private float _timeOffset;
+    [SerializeField]private Vector2 _posOfset;
+    [SerializeField]private float _leftLimit;
+    [SerializeField]private float _rightLimit;
+    [SerializeField]private float _bottomLimit;
+    [SerializeField]private float _topLimit;
 
     private void Update()
     {
@@ -18,18 +18,18 @@ public class CameraFollow : MonoBehaviour
         Vector3 startPos = transform.position;
 
         //Текущее положение игрока
-        Vector3 endPos = player.transform.position;
-        endPos.x += posOfset.x;
-        endPos.y += posOfset.y;
+        Vector3 endPos = _player.transform.position;
+        endPos.x += _posOfset.x;
+        endPos.y += _posOfset.y;
         endPos.z = -10;
 
         //Плавное следование камеры
-        transform.position = Vector3.Lerp(startPos, endPos, timeOffset * Time.deltaTime);
+        transform.position = Vector3.Lerp(startPos, endPos, _timeOffset * Time.deltaTime);
 
         transform.position = new Vector3
             (
-               Mathf.Clamp(transform.position.x, rightLimit, leftLimit),
-               Mathf.Clamp(transform.position.y, bottomLimit, topLimit),
+               Mathf.Clamp(transform.position.x, _rightLimit, _leftLimit),
+               Mathf.Clamp(transform.position.y, _bottomLimit, _topLimit),
                transform.position.z
             );
     }
@@ -38,10 +38,10 @@ public class CameraFollow : MonoBehaviour
     {
         //Нарисовать рамку камеры
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(new Vector2(leftLimit, topLimit), new Vector2(rightLimit, topLimit));
-        Gizmos.DrawLine(new Vector2(rightLimit, topLimit), new Vector2(rightLimit, bottomLimit));
-        Gizmos.DrawLine(new Vector2(rightLimit, bottomLimit), new Vector2(leftLimit, bottomLimit));
-        Gizmos.DrawLine(new Vector2(leftLimit, bottomLimit), new Vector2(leftLimit, topLimit));
+        Gizmos.DrawLine(new Vector2(_leftLimit, _topLimit), new Vector2(_rightLimit, _topLimit));
+        Gizmos.DrawLine(new Vector2(_rightLimit, _topLimit), new Vector2(_rightLimit, _bottomLimit));
+        Gizmos.DrawLine(new Vector2(_rightLimit, _bottomLimit), new Vector2(_leftLimit, _bottomLimit));
+        Gizmos.DrawLine(new Vector2(_leftLimit, _bottomLimit), new Vector2(_leftLimit, _topLimit));
 
     }
 }

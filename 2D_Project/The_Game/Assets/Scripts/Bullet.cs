@@ -5,20 +5,20 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 
-    public float speed = 10f;
-    public Rigidbody2D rb;
+    [SerializeField]private float _speed = 10f;
+    private Rigidbody2D _rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
         Invoke("DestroySelf", 3f); 
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.velocity = transform.right * speed;
+        _rb.velocity = transform.right * _speed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
