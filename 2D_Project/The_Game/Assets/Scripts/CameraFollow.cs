@@ -11,11 +11,12 @@ public class CameraFollow : MonoBehaviour
     [SerializeField]private float _rightLimit;
     [SerializeField]private float _bottomLimit;
     [SerializeField]private float _topLimit;
-
+    [SerializeField] private GameObject _leftBorder;
+    [SerializeField] private Vector3 startPos;
     private void Update()
     {
         // Текущее положение камеры
-        Vector3 startPos = transform.position;
+        startPos = transform.position;
 
         //Текущее положение игрока
         Vector3 endPos = _player.transform.position;
@@ -32,6 +33,10 @@ public class CameraFollow : MonoBehaviour
                Mathf.Clamp(transform.position.y, _bottomLimit, _topLimit),
                transform.position.z
             );
+
+
+        var cameraHalfWidth = GetComponent<Camera>().orthographicSize * ((float)Screen.width / Screen.height);        
+        _leftBorder.transform.position = new Vector2(GetComponent<Camera>().transform.position.x - cameraHalfWidth,transform.position.y);
     }
 
     private void OnDrawGizmos()

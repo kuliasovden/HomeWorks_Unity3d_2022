@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 141836536848405793}
   - component: {fileID: 141836536848405798}
   - component: {fileID: 141836536848405799}
-  - component: {fileID: 141836536848405796}
+  - component: {fileID: 2661046423748687766}
   m_Layer: 8
   m_Name: TrapPlatform
   m_TagString: Ground
@@ -132,7 +132,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 5
---- !u!114 &141836536848405796
+--- !u!114 &2661046423748687766
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
