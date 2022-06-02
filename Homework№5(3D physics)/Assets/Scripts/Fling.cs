@@ -10,6 +10,7 @@ public class Fling : MonoBehaviour
 
     private float _countdown;
     private float _delay = 5f;
+    private bool _trigger = false;
 
     // Start is called before the first frame update
     private void Start()
@@ -21,7 +22,10 @@ public class Fling : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
+        if(_trigger)
+        {
             Timer();
+        }
     }
     public void StartCatapulte()
     {       
@@ -38,6 +42,15 @@ public class Fling : MonoBehaviour
         if (_countdown <= 0)
         {
             _timerText.text = "0";
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ball"))
+        {
+            _trigger = true;
+            Debug.LogFormat("Triggerd");
         }
     }
 

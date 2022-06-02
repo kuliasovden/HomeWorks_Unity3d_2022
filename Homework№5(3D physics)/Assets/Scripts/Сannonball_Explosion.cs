@@ -11,9 +11,9 @@ public class Сannonball_Explosion : MonoBehaviour
 
     private float _liftPower = 10.0f;
     private float _countdown;
-    private float _delay = 9f;
-    private bool hasExplode = false;
-
+    private float _delay = 2f;
+    private bool _hasExplode = false;
+    private bool _timerStar = false;
     
 
     private void Start()
@@ -22,8 +22,11 @@ public class Сannonball_Explosion : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {        
-        Timer();
+    {
+        if (_timerStar)
+        {
+            Timer();
+        }       
     }
 
 
@@ -50,10 +53,19 @@ public class Сannonball_Explosion : MonoBehaviour
     private void Timer()
     {
         _countdown -= Time.deltaTime;
-        if (_countdown <= 0f && !hasExplode)
+        if (_countdown <= 0f && !_hasExplode)
         {
             Explode();
-            hasExplode = true;
+            _hasExplode = true;
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.collider.CompareTag("Crate"))
+        {
+            _timerStar = true;
+            Debug.Log("Buuum");
         }
     }
 }

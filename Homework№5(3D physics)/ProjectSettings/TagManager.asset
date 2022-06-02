@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Flor
+  - Ball
+  - Crate
   layers:
   - Default
   - TransparentFX
